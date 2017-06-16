@@ -25,15 +25,19 @@ public class Test {
 			
 			Participant p = participantDAO.findById(1L);
 			
-			p = new Participant("Vini", "85928054068", "vvzord@gmail.com");
+			p = new Participant("Vini", "8548768", "vvzord@gmail.com");
 			
-			boolean kiko = participantDAO.createOrUpdate(p);
+			p = participantDAO.createOrUpdate(p);
 			
 			p = participantDAO.findById(p.getId());
 			
 			p.setName("Vv La Lenda");
 			
-			kiko = participantDAO.createOrUpdate(p);
+			p = participantDAO.createOrUpdate(p);
+			
+			p = participantDAO.findById(p.getId());
+			
+			p = participantDAO.delete(p);
 			
 			p = participantDAO.findById(p.getId());
 		}catch(Exception e){

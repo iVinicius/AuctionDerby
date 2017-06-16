@@ -36,6 +36,8 @@ public class ParticipantDAOImpl implements ParticipantDAO {
 				p = new Participant(name, cpf, email);
 				p.setId(participantId);
 			}
+			stmt.close();
+			con.close();
 			return p;
 		} catch (SQLException ex) {
 			throw new DAOException("Falha ao buscar participante.", ex);
@@ -43,12 +45,12 @@ public class ParticipantDAOImpl implements ParticipantDAO {
 	}
 
 	@Override
-	public boolean createOrUpdate(Participant entity) throws DAOException {
+	public Participant createOrUpdate(Participant entity) throws DAOException {
 		try {
 			Connection con = BaseDAO.getConnection();
 
 			if (entity == null) {
-				return false;
+				return null;
 			}
 
 			if (entity.getId() != null && this.findById(entity.getId()) != null) {
@@ -59,19 +61,33 @@ public class ParticipantDAOImpl implements ParticipantDAO {
 				stmt.setString(2, entity.getCpf());
 				stmt.setString(3, entity.getEmail());
 				stmt.setLong(4, entity.getId());
-				int ret = stmt.executeUpdate();
+				stmt.executeUpdate();
+				stmt.close();
 				con.close();
-				return (ret > 0);
+				return entity;
 			} else {		
-				// create
+				// create 
 				PreparedStatement stmt = con
-						.prepareStatement("INSERT INTO PARTICIPANT (NAME, CPF, EMAIL) VALUES (?,?,?)");
-				stmt.setString(1, entity.getName());
-				stmt.setString(2, entity.getCpf());
-				stmt.setString(3, entity.getEmail());
-				int ret = stmt.executeUpdate();
+						.prepareStatement("values (NEXT VALUE FOR participant_seq)");
+				
+				Long nextValue = 0L;
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					nextValue = rs.getLong("1");
+				}			
+				
+				stmt.close();
+				stmt = con
+						.prepareStatement("INSERT INTO PARTICIPANT (ID, NAME, CPF, EMAIL) VALUES (?,?,?,?)");
+				stmt.setLong(1, nextValue);
+				stmt.setString(2, entity.getName());
+				stmt.setString(3, entity.getCpf());
+				stmt.setString(4, entity.getEmail());
+				stmt.executeUpdate();
+				stmt.close();
 				con.close();
-				return (ret > 0);
+				entity.setId(nextValue);
+				return entity;
 			}
 		} catch (SQLException ex) {
 			throw new DAOException("Falha ao criar ou atualizar participante.", ex);
@@ -79,18 +95,19 @@ public class ParticipantDAOImpl implements ParticipantDAO {
 	}
 
 	@Override
-	public boolean delete(Participant entity) throws DAOException {
+	public Participant delete(Participant entity) throws DAOException {
 		try {
 			if(entity == null){
-				return false;
+				return null;
 			}
 			
 			Connection con = BaseDAO.getConnection();
-			PreparedStatement stmt = con.prepareStatement("DELETE PARTICIPANT WHERE ID=?");
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM PARTICIPANT WHERE ID=?");
 			stmt.setLong(1, entity.getId());
-			int ret = stmt.executeUpdate();
+			stmt.executeUpdate();
+			stmt.close();
 			con.close();
-			return (ret > 0);
+			return entity;
 		} catch (SQLException ex) {
 			throw new DAOException("Falha ao deletar participante.", ex);
 		}
