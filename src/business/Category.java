@@ -30,4 +30,15 @@ public enum Category {
 	public String getType(){
 		return this.type;
 	}
+	
+	public static Category getCategory(Long catId){		
+		switch(catId.toString()){
+		case "1":
+			return INFORMATICA;
+			//TODO:
+			default:
+				return null;
+		}
+		
+	}
 }
