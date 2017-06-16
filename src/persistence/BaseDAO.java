@@ -17,6 +17,10 @@ public interface BaseDAO<E>{
 	
 	public E findById(Long id) throws DAOException;
 	
+	public boolean createOrUpdate(E entity) throws DAOException;
+	
+	public boolean delete(E entity) throws DAOException;
+	
 	public static Connection getConnection() throws SQLException {
         //derbyDB sera o nome do diretorio criado localmente
         return DriverManager.getConnection("jdbc:derby:derbyDB");
