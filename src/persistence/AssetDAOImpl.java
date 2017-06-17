@@ -42,7 +42,7 @@ public class AssetDAOImpl implements AssetDAO{
 			con.close();
 			return a;
 		} catch (SQLException ex) {
-			throw new DAOException("Falha ao buscar participante.", ex);
+			throw new DAOException("Falha ao buscar bem.", ex);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class AssetDAOImpl implements AssetDAO{
 				return entity;
 			}
 		} catch (SQLException ex) {
-			throw new DAOException("Falha ao criar ou atualizar participante.", ex);
+			throw new DAOException("Falha ao criar ou atualizar bem.", ex);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class AssetDAOImpl implements AssetDAO{
 			con.close();
 			return entity;
 		} catch (SQLException ex) {
-			throw new DAOException("Falha ao deletar participante.", ex);
+			throw new DAOException("Falha ao deletar bem.", ex);
 		}
 	}
 

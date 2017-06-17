@@ -36,6 +36,38 @@ public class Bid {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Participant getBidder() {
+		return bidder;
+	}
+
+	public void setBidder(Participant bidder) {
+		this.bidder = bidder;
+	}
+
+	public Long getValue() {
+		return value;
+	}
+
+	public void setValue(Long value) {
+		this.value = value;
+	}
+
+	public Lot getLot() {
+		return lot;
+	}
+
+	public void setLot(Lot lot) {
+		this.lot = lot;
+	}
+
+	public Date getBidTime() {
+		return bidTime;
+	}
+
+	public void setBidTime(Date bidTime) {
+		this.bidTime = bidTime;
+	}
 	
 	
 }

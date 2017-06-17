@@ -37,19 +37,9 @@ public interface BaseDAO<E>{
 	public static void createDerbyDB() throws DAOException{
 		try {
             Connection con = DriverManager.getConnection("jdbc:derby:derbyDB;create=true");
-            /*Statement sta = con.createStatement();
-            String sql = "CREATE TABLE PARTICIPANT ("
-                    + "ID INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                    + "NAME VARCHAR(300) NOT NULL,"
-                    + "CPF VARCHAR(14) NOT NULL,"
-                    + "EMAIL VARCHAR(100) NOT NULL"
-                    + ")";
-            sta.executeUpdate(sql);
-            sta.close();*/
             con.close();
         } catch (SQLException ex) {
-            //throw new DAOException(ex.getMessage());
-        	ex.printStackTrace();
+            throw new DAOException(ex.getMessage());
         }
 		System.out.println("DerbyDB created successfuly");
 	}
