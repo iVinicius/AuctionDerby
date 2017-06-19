@@ -8,10 +8,10 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Test;
 
-import business.Participant;
-import persistence.DAOException;
-import persistence.ParticipantDAO;
-import persistence.ParticipantDAOImpl;
+import persistence.dao.DAOException;
+import persistence.dao.ParticipantDAO;
+import persistence.dao.impl.ParticipantDAOImpl;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius

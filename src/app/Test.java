@@ -7,10 +7,10 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import business.Participant;
-import persistence.BaseDAO;
-import persistence.ParticipantDAO;
-import persistence.ParticipantDAOImpl;
+import persistence.dao.BaseDAO;
+import persistence.dao.ParticipantDAO;
+import persistence.dao.impl.ParticipantDAOImpl;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius
@@ -21,7 +21,7 @@ public class Test {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void kiko(String[] args) {
 		try{
 			BaseDAO.createDerbyDB();
 			

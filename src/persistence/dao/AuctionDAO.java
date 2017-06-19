@@ -1,9 +1,9 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
-import business.Auction;
+import persistence.entities.Auction;
 
 /**
  * @author Vinicius

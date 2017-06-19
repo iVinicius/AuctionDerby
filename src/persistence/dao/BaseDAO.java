@@ -1,7 +1,7 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

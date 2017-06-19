@@ -1,7 +1,7 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
 /**
  * @author Vinicius

@@ -1,14 +1,17 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import business.Participant;
+import persistence.dao.BaseDAO;
+import persistence.dao.DAOException;
+import persistence.dao.ParticipantDAO;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius

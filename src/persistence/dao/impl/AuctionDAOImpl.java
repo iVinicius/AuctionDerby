@@ -1,7 +1,7 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
@@ -10,10 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import business.Auction;
-import business.Bid;
-import business.Lot;
-import business.Participant;
+import persistence.dao.AuctionDAO;
+import persistence.dao.BaseDAO;
+import persistence.dao.BidDAO;
+import persistence.dao.DAOException;
+import persistence.dao.LotDAO;
+import persistence.dao.ParticipantDAO;
+import persistence.entities.Auction;
+import persistence.entities.Bid;
+import persistence.entities.Lot;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius

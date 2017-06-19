@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
-import business.Asset;
-import business.Category;
-import business.Lot;
-import persistence.AssetDAO;
-import persistence.AssetDAOImpl;
-import persistence.DAOException;
-import persistence.LotDAO;
-import persistence.LotDAOImpl;
+import persistence.dao.AssetDAO;
+import persistence.dao.DAOException;
+import persistence.dao.LotDAO;
+import persistence.dao.impl.AssetDAOImpl;
+import persistence.dao.impl.LotDAOImpl;
+import persistence.entities.Asset;
+import persistence.entities.Category;
+import persistence.entities.Lot;
 
 /**
  * @author Vinicius

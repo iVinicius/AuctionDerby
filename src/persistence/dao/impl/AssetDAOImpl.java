@@ -1,15 +1,18 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import business.Asset;
-import business.Category;
+import persistence.dao.AssetDAO;
+import persistence.dao.BaseDAO;
+import persistence.dao.DAOException;
+import persistence.entities.Asset;
+import persistence.entities.Category;
 
 /**
  * @author 14108849

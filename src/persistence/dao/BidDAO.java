@@ -1,9 +1,9 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
-import business.Bid;
+import persistence.entities.Bid;
 
 /**
  * @author 14108849

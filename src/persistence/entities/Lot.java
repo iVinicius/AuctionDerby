@@ -1,7 +1,7 @@
 /**
  * 
  */
-package business;
+package persistence.entities;
 
 import java.util.ArrayList;
 

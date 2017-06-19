@@ -1,7 +1,7 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import business.Asset;
-import business.Lot;
+import persistence.dao.AssetDAO;
+import persistence.dao.BaseDAO;
+import persistence.dao.DAOException;
+import persistence.dao.LotDAO;
+import persistence.entities.Asset;
+import persistence.entities.Lot;
 
 /**
  * @author 14108849

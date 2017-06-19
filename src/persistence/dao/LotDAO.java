@@ -1,9 +1,9 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
-import business.Lot;
+import persistence.entities.Lot;
 
 /**
  * @author 14108849

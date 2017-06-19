@@ -1,9 +1,9 @@
 /**
  * 
  */
-package persistence;
+package persistence.dao;
 
-import business.Participant;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius

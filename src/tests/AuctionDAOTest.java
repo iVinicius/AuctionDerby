@@ -12,21 +12,21 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
-import business.Asset;
-import business.Auction;
-import business.Bid;
-import business.Category;
-import business.Lot;
-import business.Participant;
-import persistence.DAOException;
-import persistence.LotDAO;
-import persistence.LotDAOImpl;
-import persistence.ParticipantDAO;
-import persistence.ParticipantDAOImpl;
-import persistence.AuctionDAO;
-import persistence.AuctionDAOImpl;
-import persistence.BidDAO;
-import persistence.BidDAOImpl;
+import persistence.dao.AuctionDAO;
+import persistence.dao.BidDAO;
+import persistence.dao.DAOException;
+import persistence.dao.LotDAO;
+import persistence.dao.ParticipantDAO;
+import persistence.dao.impl.AuctionDAOImpl;
+import persistence.dao.impl.BidDAOImpl;
+import persistence.dao.impl.LotDAOImpl;
+import persistence.dao.impl.ParticipantDAOImpl;
+import persistence.entities.Asset;
+import persistence.entities.Auction;
+import persistence.entities.Bid;
+import persistence.entities.Category;
+import persistence.entities.Lot;
+import persistence.entities.Participant;
 
 /**
  * @author Vinicius

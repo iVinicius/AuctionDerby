@@ -6,11 +6,11 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import business.Asset;
-import business.Category;
-import persistence.AssetDAO;
-import persistence.AssetDAOImpl;
-import persistence.DAOException;
+import persistence.dao.AssetDAO;
+import persistence.dao.DAOException;
+import persistence.dao.impl.AssetDAOImpl;
+import persistence.entities.Asset;
+import persistence.entities.Category;
 
 /**
  * @author Vinicius
