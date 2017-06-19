@@ -3,7 +3,7 @@
  */
 package business;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Vinicius
@@ -19,9 +19,9 @@ public class Bid {
 	
 	private Lot lot;
 	
-	private Date bidTime;
+	private Timestamp bidTime;
 
-	public Bid(Participant bidder, Long value, Lot lot, Date bidTime) {
+	public Bid(Participant bidder, Long value, Lot lot, Timestamp bidTime) {
 		super();
 		this.bidder = bidder;
 		this.value = value;
@@ -61,13 +61,12 @@ public class Bid {
 		this.lot = lot;
 	}
 
-	public Date getBidTime() {
+	public Timestamp getBidTime() {
 		return bidTime;
 	}
 
-	public void setBidTime(Date bidTime) {
+	public void setBidTime(Timestamp bidTime) {
 		this.bidTime = bidTime;
 	}
-	
 	
 }

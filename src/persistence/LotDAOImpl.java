@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import business.Asset;
-import business.Category;
 import business.Lot;
 
 /**
@@ -43,6 +42,7 @@ public class LotDAOImpl implements LotDAO{
 			stmt.close();
 			
 			stmt = con.prepareStatement("SELECT * FROM LOT_ASSET WHERE LOT_ID=?");
+			stmt.setLong(1, id);
 			resultado = stmt.executeQuery();
 			ArrayList<Asset> assets = new ArrayList<>();
 			while (resultado.next()) {
@@ -50,7 +50,9 @@ public class LotDAOImpl implements LotDAO{
 				Asset asset = assetDAO.findById(assetId);				
 				assets.add(asset);
 			}		
-			l.setAssets(assets);
+			if(l != null){
+				l.setAssets(assets);
+			}			
 			
 			stmt.close();
 			con.close();
@@ -72,7 +74,7 @@ public class LotDAOImpl implements LotDAO{
 			if (entity.getId() != null && this.findById(entity.getId()) != null) {
 				// update
 				PreparedStatement stmt = con.prepareStatement(
-						"UPDATE LOT " + " SET VALUE = ?, ISMAXVALUE = ?" + " WHERE ID = ?");
+						"UPDATE LOT " + " SET VALUE = ?, ISVALUEMAX = ?" + " WHERE ID = ?");
 				stmt.setLong(1, entity.getValue());
 				stmt.setString(2, entity.isValueMax() ? "Y" : "N");
 				stmt.setLong(3, entity.getId());
@@ -99,20 +101,27 @@ public class LotDAOImpl implements LotDAO{
 				
 				stmt.close();
 				stmt = con
-						.prepareStatement("INSERT INTO LOT (ID, VALUE, ISMAXVALUE) VALUES (?,?,?)");
+						.prepareStatement("INSERT INTO LOT (ID, VALUE, ISVALUEMAX) VALUES (?,?,?)");
 				stmt.setLong(1, nextValue);
 				stmt.setLong(2, entity.getValue());
 				stmt.setString(3, entity.isValueMax() ? "Y" : "N");
 
 				stmt.executeUpdate();
+				entity.setId(nextValue);
 				stmt.close();
 				
 				for(Asset asset : entity.getAssets()){
-					assetDAO.createOrUpdate(asset);
-				}
+					asset = assetDAO.createOrUpdate(asset);
+					
+					stmt = con
+							.prepareStatement("INSERT INTO LOT_ASSET (LOT_ID, ASSET_ID) VALUES (?,?)");
+					stmt.setLong(1, entity.getId());
+					stmt.setLong(2, asset.getId());
+					stmt.executeUpdate();
+					stmt.close();
+				}						
 				
 				con.close();
-				entity.setId(nextValue);
 				return entity;
 			}
 		} catch (SQLException ex) {
@@ -128,14 +137,21 @@ public class LotDAOImpl implements LotDAO{
 			}
 			
 			Connection con = BaseDAO.getConnection();
-			PreparedStatement stmt = con.prepareStatement("DELETE FROM LOT WHERE ID=?");
+			PreparedStatement stmt = con.
+					prepareStatement("DELETE FROM LOT WHERE ID=?");
 			stmt.setLong(1, entity.getId());
 			stmt.executeUpdate();
 			stmt.close();
 			
 			for(Asset asset : entity.getAssets()){
-				assetDAO.delete(asset);
+				assetDAO.delete(asset);						
 			}
+			
+			stmt = con.
+					prepareStatement("DELETE FROM LOT_ASSET WHERE LOT_ID=?");
+			stmt.setLong(1, entity.getId());
+			stmt.executeUpdate();
+			stmt.close();
 			
 			con.close();
 			return entity;

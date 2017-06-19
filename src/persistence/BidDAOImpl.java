@@ -4,7 +4,7 @@
 package persistence;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,11 +38,11 @@ public class BidDAOImpl implements BidDAO{
 			if (resultado.next()) {
 				Long bidId = resultado.getLong("ID");
 				Long value = resultado.getLong("VALUE");
-				Long bidderId = resultado.getLong("BIDDER");
+				Long bidderId = resultado.getLong("BIDDER_ID");
 				Participant bidder = participantDAO.findById(bidderId);
-				Long lotId = resultado.getLong("LOT");
+				Long lotId = resultado.getLong("LOT_ID");
 				Lot lot = lotDAO.findById(lotId);
-				Date bidTime = resultado.getDate("bidTime");
+				Timestamp bidTime = resultado.getTimestamp("bidTime");
 				b = new Bid(bidder, value, lot, bidTime);
 				b.setId(bidId);
 			}
@@ -70,7 +70,7 @@ public class BidDAOImpl implements BidDAO{
 				stmt.setLong(1, entity.getValue());
 				stmt.setLong(2, entity.getBidder().getId());
 				stmt.setLong(3, entity.getLot().getId());
-				stmt.setDate(4, entity.getBidTime());
+				stmt.setTimestamp(4, entity.getBidTime());
 				stmt.setLong(5, entity.getId());
 				stmt.executeUpdate();
 				stmt.close();
@@ -91,14 +91,22 @@ public class BidDAOImpl implements BidDAO{
 				stmt = con
 						.prepareStatement("INSERT INTO BID (ID, VALUE, BIDDER_ID, LOT_ID, BIDTIME) VALUES (?,?,?,?,?)");
 				stmt.setLong(1, nextValue);
-				stmt.setLong(1, entity.getValue());
-				stmt.setLong(2, entity.getBidder().getId());
-				stmt.setLong(3, entity.getLot().getId());
-				stmt.setDate(4, entity.getBidTime());
+				stmt.setLong(2, entity.getValue());
+				stmt.setLong(3, entity.getBidder().getId());
+				stmt.setLong(4, entity.getLot().getId());
+				stmt.setTimestamp(5, entity.getBidTime());
+				stmt.executeUpdate();
+				entity.setId(nextValue);
+				stmt.close();
+				
+				stmt = con
+						.prepareStatement("INSERT INTO LOT_BID (LOT_ID, BID_ID) VALUES (?,?)");
+				stmt.setLong(1, entity.getLot().getId());
+				stmt.setLong(2, entity.getId());
 				stmt.executeUpdate();
 				stmt.close();
-				con.close();
-				entity.setId(nextValue);
+				
+				con.close();			
 				return entity;
 			}
 		} catch (SQLException ex) {
@@ -118,6 +126,12 @@ public class BidDAOImpl implements BidDAO{
 			stmt.setLong(1, entity.getId());
 			stmt.executeUpdate();
 			stmt.close();
+			
+			stmt = con.prepareStatement("DELETE FROM LOT_BID WHERE BID_ID=?");
+			stmt.setLong(1, entity.getId());
+			stmt.executeUpdate();
+			stmt.close();
+			
 			con.close();
 			return entity;
 		} catch (SQLException ex) {

@@ -3,6 +3,10 @@
  */
 package app;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
 import business.Participant;
 import persistence.BaseDAO;
 import persistence.ParticipantDAO;
@@ -40,6 +44,16 @@ public class Test {
 			p = participantDAO.delete(p);
 			
 			p = participantDAO.findById(p.getId());
+			
+			Timestamp stamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+			
+			long longStamp = stamp.getTime();
+			
+			String stringStamp = stamp.toString();
+			
+			Date dateStamp = new Date(stamp.getTime());
+			
+			Date newDate = new Date(117, 5, 18, 20, 29);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

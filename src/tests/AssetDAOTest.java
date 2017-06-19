@@ -3,29 +3,27 @@
  */
 package tests;
 
-import java.util.Random;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import business.Participant;
+import business.Asset;
+import business.Category;
+import persistence.AssetDAO;
+import persistence.AssetDAOImpl;
 import persistence.DAOException;
-import persistence.ParticipantDAO;
-import persistence.ParticipantDAOImpl;
 
 /**
  * @author Vinicius
  *
  */
-public class ParticipantDAOTest extends BaseDAOTest{
+public class AssetDAOTest extends BaseDAOTest{
+
+	private AssetDAO assetDAO = new AssetDAOImpl();
 	
-	private ParticipantDAO participantDAO = new ParticipantDAOImpl();
-	
-	private Participant entity;
+	private Asset entity;
 	
 	public void generateObject(){
-		Random rand = new Random();
-		entity = new Participant("TesteParticipante", rand.nextInt(99999999)+"", "teste@teste.com");
+		entity = new Asset("Oculos", "Oculos Rayban", Category.INFORMATICA);
 	}
 	
 	@Test
@@ -38,28 +36,28 @@ public class ParticipantDAOTest extends BaseDAOTest{
 	}
 
 	public void testCreate() throws DAOException{
-		entity = participantDAO.createOrUpdate(entity);
+		entity = assetDAO.createOrUpdate(entity);
 		Assert.assertNotNull(entity);
 		Assert.assertNotNull(entity.getId());
 	}
 	
 	public void testFind() throws DAOException{
-		entity = participantDAO.findById(entity.getId());
+		entity = assetDAO.findById(entity.getId());
 		Assert.assertNotNull(entity);
 		Assert.assertNotNull(entity.getId());
 	}
 
 	public void testUpdate() throws DAOException{
-		entity.setName("TesteAlterado");
-		entity = participantDAO.createOrUpdate(entity);
+		entity.setBriefDescription("TesteAlterado");
+		entity = assetDAO.createOrUpdate(entity);
 		Assert.assertNotNull(entity);
 		Assert.assertNotNull(entity.getId());
-		Assert.assertEquals(entity.getName(), "TesteAlterado");
+		Assert.assertEquals(entity.getBriefDescription(), "TesteAlterado");
 	}
 	
 	public void testDelete() throws DAOException{
-		participantDAO.delete(entity);
-		entity = participantDAO.findById(entity.getId());
+		assetDAO.delete(entity);
+		entity = assetDAO.findById(entity.getId());
 		Assert.assertNull(entity);
 	}
 }

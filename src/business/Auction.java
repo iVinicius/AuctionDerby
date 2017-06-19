@@ -3,7 +3,7 @@
  */
 package business;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -18,9 +18,9 @@ public class Auction {
 	
 	private boolean hiddenBids;
 	
-	private Date startBidding;
+	private Timestamp startBidding;
 	
-	private Date endBidding;
+	private Timestamp endBidding;
 	
 	private Participant sellerOrBuyer;
 	
@@ -28,7 +28,7 @@ public class Auction {
 	
 	private ArrayList<Bid> bids;
 
-	public Auction(boolean byDemand, boolean hiddenBids, Date startBidding, Date endBidding, Participant sellerOrBuyer,
+	public Auction(boolean byDemand, boolean hiddenBids, Timestamp startBidding, Timestamp endBidding, Participant sellerOrBuyer,
 			Lot lot, ArrayList<Bid> bids) {
 		super();
 		this.byDemand = byDemand;
@@ -40,7 +40,7 @@ public class Auction {
 		this.bids = bids;
 	}
 	
-	public Auction(boolean byDemand, boolean hiddenBids, Date startBidding, Date endBidding, Participant sellerOrBuyer,
+	public Auction(boolean byDemand, boolean hiddenBids, Timestamp startBidding, Timestamp endBidding, Participant sellerOrBuyer,
 			Lot lot) {
 		super();
 		this.byDemand = byDemand;
@@ -75,19 +75,19 @@ public class Auction {
 		this.hiddenBids = hiddenBids;
 	}
 
-	public Date getStartBidding() {
+	public Timestamp getStartBidding() {
 		return startBidding;
 	}
 
-	public void setStartBidding(Date startBidding) {
+	public void setStartBidding(Timestamp startBidding) {
 		this.startBidding = startBidding;
 	}
 
-	public Date getEndBidding() {
+	public Timestamp getEndBidding() {
 		return endBidding;
 	}
 
-	public void setEndBidding(Date endBidding) {
+	public void setEndBidding(Timestamp endBidding) {
 		this.endBidding = endBidding;
 	}
 
