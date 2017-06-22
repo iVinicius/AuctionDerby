@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import persistence.dao.AuctionDAO;
 import persistence.dao.BaseDAO;
@@ -176,6 +177,40 @@ public class AuctionDAOImpl implements AuctionDAO{
 			return entity;
 		} catch (SQLException ex) {
 			throw new DAOException("Falha ao deletar leilao.", ex);
+		}
+	}
+
+	@Override
+	public List<Auction> getAll() throws DAOException {
+		try{
+			List<Auction> list = new ArrayList<>();
+			
+			Connection con = BaseDAO.getConnection();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM AUCTION");
+			ResultSet resultado = stmt.executeQuery();
+			Auction a = null;
+			while (resultado.next()) {
+				Long auctionId = resultado.getLong("ID");
+				String byDemand = resultado.getString("BYDEMAND");
+				String hiddenBids = resultado.getString("HIDDENBIDS");
+				Timestamp startBidding = resultado.getTimestamp("STARTBIDDING");
+				Timestamp endBidding = resultado.getTimestamp("ENDBIDDING");
+				Long sellerOrBuyerId = resultado.getLong("SELLERORBUYER_ID");
+				Participant sellerOrBuyer = participantDAO.findById(sellerOrBuyerId);
+				Long lotId = resultado.getLong("LOT_ID");
+				Lot lot = lotDAO.findById(lotId);
+
+				a = new Auction(byDemand.equalsIgnoreCase("Y") ? true : false, 
+						hiddenBids.equalsIgnoreCase("Y") ? true : false, startBidding, endBidding, sellerOrBuyer, lot); 
+				a.setId(auctionId);
+				list.add(a);
+			}
+			stmt.close();
+			
+			con.close();
+			return list;
+		}catch (SQLException ex) {
+			throw new DAOException("Falha ao buscar todos os leiloes.", ex);
 		}
 	}
 

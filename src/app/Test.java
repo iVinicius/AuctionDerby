@@ -54,6 +54,8 @@ public class Test {
 			Date dateStamp = new Date(stamp.getTime());
 			
 			Date newDate = new Date(117, 5, 18, 20, 29);
+			
+			stamp = new Timestamp(dateStamp.getTime());
 		}catch(Exception e){
 			e.printStackTrace();
 		}

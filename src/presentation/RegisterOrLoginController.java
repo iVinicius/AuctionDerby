@@ -9,8 +9,6 @@ import business.Facade;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class RegisterOrLoginController {
 
@@ -101,9 +99,9 @@ public class RegisterOrLoginController {
 	
 	private void actionPerformedLogin(){
 		try{
-			Long result = Facade.userLogin("");
+			Long result = Facade.getInstance().userLogin(txtLoginId.getText());
 			userId = result;
-			throw new Exception();
+			frame.dispose();
 		}catch(Exception e){
 			// TODO:
 			new ErrorWindowController("Usuario nao encontrado");
@@ -112,10 +110,12 @@ public class RegisterOrLoginController {
 	
 	private void actionPerformedRegister(){
 		try{
-			Long result = Facade.userRegister("", "", "");
+			Long result = Facade.getInstance().userRegister(txtRegistroNome.getText(), txtRegistroCpf.getText(), txtRegistroEmail.getText());
 			userId = result;
+			txtLoginId.setText(userId.toString());
 		}catch(Exception e){
 			// TODO:
+			new ErrorWindowController("Algum erro ocorreu");
 		}
 	}
 	
