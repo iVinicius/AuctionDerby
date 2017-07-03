@@ -5,6 +5,8 @@ package persistence.dao.impl;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -141,6 +143,40 @@ public class BidDAOImpl implements BidDAO{
 			return entity;
 		} catch (SQLException ex) {
 			throw new DAOException("Falha ao deletar lance.", ex);
+		}
+	}
+
+	@Override
+	public List<Bid> findByLotId(Long lotId) throws DAOException {
+		try {
+			if(lotId == null){
+				return null;
+			}
+			List<Bid> bidList = new ArrayList<>();
+			
+			Connection con = BaseDAO.getConnection();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM BID WHERE LOT_ID=?");
+			stmt.setLong(1, lotId);
+			ResultSet resultado = stmt.executeQuery();
+			Bid b = null;
+			while (resultado.next()) {
+				Long bidId = resultado.getLong("ID");
+				Long value = resultado.getLong("VALUE");
+				Long bidderId = resultado.getLong("BIDDER_ID");
+				Participant bidder = participantDAO.findById(bidderId);
+				Long lotIdd = resultado.getLong("LOT_ID");
+				Lot lot = lotDAO.findById(lotIdd);
+				Timestamp bidTime = resultado.getTimestamp("bidTime");
+				b = new Bid(bidder, value, lot, bidTime);
+				b.setId(bidId);
+				
+				bidList.add(b);
+			}
+			stmt.close();
+			con.close();
+			return bidList;
+		} catch (SQLException ex) {
+			throw new DAOException("Falha ao buscar lances do lote.", ex);
 		}
 	}
 

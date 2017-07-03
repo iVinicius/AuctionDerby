@@ -3,6 +3,8 @@
  */
 package persistence.dao;
 
+import java.util.List;
+
 import persistence.entities.Bid;
 
 /**
@@ -10,5 +12,7 @@ import persistence.entities.Bid;
  *
  */
 public interface BidDAO extends BaseDAO<Bid>{
+	
+	public List<Bid> findByLotId(Long lotId) throws DAOException;
 
 }

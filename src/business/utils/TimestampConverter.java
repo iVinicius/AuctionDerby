@@ -40,4 +40,15 @@ public class TimestampConverter {
 		
 		return stmp;
 	}
+	
+	//expected format dd/MM/yy:HH:mm
+	public String convertFromTimestamp(Timestamp timestamp){
+		Date dateAux = new Date(timestamp.getTime());
+		
+		String parsed = "";
+		parsed += dateAux.getDate() + "/" + (dateAux.getMonth()+1) + "/" + (dateAux.getYear()+1900);
+		parsed += ":" + dateAux.getHours() + ":" + dateAux.getMinutes();
+		
+		return parsed;
+	}
 }

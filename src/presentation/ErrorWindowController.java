@@ -22,12 +22,12 @@ public class ErrorWindowController {
 	 */
 	private void initialize(String errorMessage) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 287, 201);
+		frame.setBounds(100, 100, 671, 201);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel(errorMessage);
-		lblNewLabel.setBounds(15, 16, 247, 103);
+		lblNewLabel.setBounds(15, 58, 616, 20);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnOk = new JButton("OK");
@@ -36,7 +36,7 @@ public class ErrorWindowController {
 				frame.dispose();
 			}
 		});
-		btnOk.setBounds(75, 134, 117, 29);
+		btnOk.setBounds(289, 134, 117, 29);
 		frame.getContentPane().add(btnOk);
 		frame.setVisible(true);
 	}

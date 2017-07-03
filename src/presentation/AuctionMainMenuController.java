@@ -3,17 +3,14 @@ package presentation;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.List;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import business.Facade;
+import persistence.dao.BaseDAO;
 
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
@@ -31,6 +28,8 @@ public class AuctionMainMenuController {
 	private JLabel lblLoggedUserId;
 
 	private List listAuction;
+	
+	private List listBids;
 
 	// MANUALLY GENERATED ATTRIBUTES
 	private Long userId;
@@ -42,6 +41,7 @@ public class AuctionMainMenuController {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					BaseDAO.createDerbyDB();
 					AuctionMainMenuController window = new AuctionMainMenuController();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -88,6 +88,7 @@ public class AuctionMainMenuController {
 		listAuction.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				auctionListMouseClickedAction();
 			}
 		});
 		listAuction.setBounds(21, 42, 154, 80);
@@ -97,9 +98,9 @@ public class AuctionMainMenuController {
 		lblListaDeLeiloes.setBounds(26, 16, 160, 20);
 		frame.getContentPane().add(lblListaDeLeiloes);
 
-		List list_1 = new List();
-		list_1.setBounds(221, 42, 154, 80);
-		frame.getContentPane().add(list_1);
+		listBids = new List();
+		listBids.setBounds(221, 42, 154, 80);
+		frame.getContentPane().add(listBids);
 
 		JLabel lblListaDe = new JLabel("Lista de lances:");
 		lblListaDe.setBounds(221, 16, 154, 20);
@@ -131,6 +132,11 @@ public class AuctionMainMenuController {
 		frame.getContentPane().add(button_1);
 
 		JButton btnCriarLeilao = new JButton("Criar leilao");
+		btnCriarLeilao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionPerformedCreateAuction();
+			}
+		});
 		btnCriarLeilao.setBounds(38, 188, 117, 29);
 		frame.getContentPane().add(btnCriarLeilao);
 
@@ -173,12 +179,20 @@ public class AuctionMainMenuController {
 		registerOrLoginWindow = new RegisterOrLoginController();
 	}
 
-	// open the auction controller
+	// open the auction controller in details only mode
 	private void actionPerformedAuctionDetails() {
 		// find selected auction id
 		String auctionIdStr = listAuction.getSelectedItem();
 
-		auctionDetailsWindow = new AuctionDetailsController(auctionIdStr, userId);
+		auctionDetailsWindow = new AuctionDetailsController(auctionIdStr, userId, true);
+	}
+	
+	// open the auction controller in creation mode
+	private void actionPerformedCreateAuction(){
+		// find selected auction id
+		String auctionIdStr = listAuction.getSelectedItem();
+
+		auctionDetailsWindow = new AuctionDetailsController(auctionIdStr, userId, false);
 	}
 
 	// update auction list
@@ -187,6 +201,23 @@ public class AuctionMainMenuController {
 		listAuction.removeAll();
 		for (String s : list) {
 			listAuction.add(s);
+		}
+	}
+	
+	private void auctionListMouseClickedAction() {
+		try{
+			updateBidList();	
+		} catch (Exception e) {
+			new ErrorWindowController("Ocorreu algum erro ao buscar os lances deste leilao.");
+		}
+	}
+	
+	// update bid list based on selected auction
+	private void updateBidList() throws Exception {
+		java.util.List<String> list = Facade.getInstance().getBidListByAuctionId(listAuction.getSelectedItem());
+		listBids.removeAll();
+		for (String s : list) {
+			listBids.add(s);
 		}
 	}
 }

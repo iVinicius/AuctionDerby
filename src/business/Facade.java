@@ -7,8 +7,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.utils.StringUtils;
 import business.utils.TimestampConverter;
 import persistence.entities.Auction;
+import persistence.entities.Bid;
 
 /**
  * @author Vinicius
@@ -21,6 +23,8 @@ public class Facade {
     ParticipantBO participantBO = new ParticipantBO();
     
     AuctionBO auctionBO = new AuctionBO();
+    
+    BidBO bidBO = new BidBO();
     
     public static Facade getInstance() {
         if (ref == null)
@@ -63,11 +67,44 @@ public class Facade {
 			Long lotValueLong = Long.parseLong(lotValue);
 			
 			Auction newA = auctionBO.createAuction(boolByDemand, boolHiddenBids, startDate, endDate, sellerOrBuyerIdLong, lotValueLong);
+			
 			return newA;
 		}catch(NumberFormatException nE){
 			throw new BusinessException("Ocorreu um erro ao utilizar os valores fornecidos, por favor tente novamente.");
 		}catch(Exception e){
 			throw e;
+		}
+	}
+	
+	public List<String> getBidListByAuctionId(String auctionId) throws Exception{
+		try{
+			List<String> bidListStr = new ArrayList<>();
+			
+			if(auctionId == null || StringUtils.getInstance().isEmpty(auctionId)){
+				return bidListStr;
+			}
+			
+			Long auctionIdLong = Long.parseLong(auctionId);				
+			
+			List<Bid> bidList = bidBO.getBidsByAuction(auctionIdLong);
+			
+			for(Bid b : bidList){
+				bidListStr.add(b.getId().toString());
+			}
+			
+			return bidListStr;
+		}catch(Exception e){
+			//TODO:
+			throw e;
+		}
+	}
+	
+	public Auction getAuctionById(String auctionId){
+		try{
+			return auctionBO.findAuctionById(Long.parseLong(auctionId));
+		}catch(Exception e){
+			// do nothing
+			return null;
 		}
 	}
 }

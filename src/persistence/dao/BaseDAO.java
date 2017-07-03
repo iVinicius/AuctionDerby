@@ -25,20 +25,13 @@ public interface BaseDAO<E>{
         return DriverManager.getConnection("jdbc:derby:derbyDB");
     }
 	
-	public static void isRunning() throws DAOException{
-		try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-       } catch (ClassNotFoundException ex) {
-           throw new DAOException("JdbcOdbDriver not found!!");
-       }
-	}
-	
 	public static void createDerbyDB() throws DAOException{
 		try {
             Connection con = DriverManager.getConnection("jdbc:derby:derbyDB;create=true");
             con.close();
         } catch (SQLException ex) {
-            throw new DAOException(ex.getMessage());
+            //throw new DAOException(ex.getMessage());
+        	System.out.println("DerbyDB is already running");
         }
 		System.out.println("DerbyDB created successfuly");
 	}

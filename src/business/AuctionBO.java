@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import persistence.dao.AuctionDAO;
+import persistence.dao.DAOException;
 import persistence.dao.LotDAO;
 import persistence.dao.ParticipantDAO;
 import persistence.dao.impl.AuctionDAOImpl;
@@ -59,5 +60,9 @@ public class AuctionBO {
 			//TODO:
 			throw e;
 		}
+	}
+	
+	public Auction findAuctionById(Long auctionId) throws DAOException{
+		return auctionDao.findById(auctionId);
 	}
 }
