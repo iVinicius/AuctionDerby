@@ -14,6 +14,7 @@
 	- Rodar o programa enquanto conectado no banco por outra fonte irá buga-lo
 	- As primeiras querys podem demorar um pouco
 	- Após se registrar e fechar o programa, basta lembrar do ID gerado e fazer login
+	- Os DaoTests estão mais para testes de integração com o banco que unit tests .-.
 
 ## Comentários
 	- A solução não foi completamente implementada, porém todo o "core" da solução permite adicionar/alterar funcionalidades de forma fácil
